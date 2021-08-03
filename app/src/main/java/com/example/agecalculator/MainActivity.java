@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView daySpend, monthSpend, yearSpend;
     private TextView nxtBday;
     private Button calculate;
-    public String dobDate, nxtbday, nxtbday1, nxtbday2, nxtbday3, nxtbday4, nxtbday5;
+    public String dobDate, nxtbday,nxtbday0, nxtbday1, nxtbday2, nxtbday3, nxtbday4, nxtbday5;
     public LocalDate localDate1, localDate2;
     public Period period;
     DatePickerDialog.OnDateSetListener setListner;
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (month < 10 && dayOfMonth >= 10){
                     DATE = dayOfMonth+"-0"+month+"-"+year;
+                    nxtbday0 = dayOfMonth+"-0"+month+"-"+(yyyy);
                     nxtbday = dayOfMonth+"-0"+month+"-"+(yyyy+1);
                     nxtbday1 = dayOfMonth+"-0"+month+"-"+(yyyy+1);
                     nxtbday2 = dayOfMonth+"-0"+month+"-"+(yyyy+2);
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     nxtbday5 = dayOfMonth+"-0"+month+"-"+(yyyy+5);
                 }else  if (month < 10 && dayOfMonth < 10){
                     DATE = "0"+dayOfMonth+"-0"+month+"-"+year;
+                    nxtbday0 = "0"+dayOfMonth+"-0"+month+"-"+(yyyy);
                     nxtbday = "0"+dayOfMonth+"-0"+month+"-"+(yyyy+1);
                     nxtbday1 = "0"+dayOfMonth+"-0"+month+"-"+(yyyy+1);
                     nxtbday2 = "0"+dayOfMonth+"-0"+month+"-"+(yyyy+2);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     nxtbday5 = "0"+dayOfMonth+"-0"+month+"-"+(yyyy+5);
                 }else if (dayOfMonth < 10 && month >= 10){
                     DATE = "0"+dayOfMonth+"-"+month+"-"+year;
+                    nxtbday0 = "0"+dayOfMonth+"-"+month+"-"+(yyyy+1);
                     nxtbday = "0"+dayOfMonth+"-"+month+"-"+(yyyy+1);
                     nxtbday1 = "0"+dayOfMonth+"-"+month+"-"+(yyyy+1);
                     nxtbday2 = "0"+dayOfMonth+"-"+month+"-"+(yyyy+2);
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                         Date d1 = simpleDateFormat.parse(today);
                         Date d2 = simpleDateFormat.parse(dobDate);
                         Date nd = simpleDateFormat.parse(nxtbday);
+                        Date nd0 = simpleDateFormat.parse(nxtbday0);
                         Date nd1 = simpleDateFormat.parse(nxtbday1);
                         Date nd2 = simpleDateFormat.parse(nxtbday2);
                         Date nd3 = simpleDateFormat.parse(nxtbday3);
@@ -165,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
 //                        Log.d("Next BDay 5 : ", String.valueOf(nd5));
 //
                         long diff_in_time = nd.getTime() - d1.getTime();
+                        long diff_in_time0 = nd0.getTime() - d1.getTime();
                         long diff_in_time1 = nd1.getTime() - d1.getTime();
                         long diff_in_time2 = nd2.getTime() - d1.getTime();
                         long diff_in_time3 = nd3.getTime() - d1.getTime();
@@ -173,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
 //                        int days = (int) (diff_in_time / (1000*60*60*24));
 //                        long diff_in_month = (TimeUnit.MILLISECONDS.toDays(diff_in_time) % 365) / 30;
                         long diff_in_day = (TimeUnit.MILLISECONDS.toDays(diff_in_time));
+                        long diff_in_day0 = (TimeUnit.MILLISECONDS.toDays(diff_in_time0));
                         long diff_in_day1 = (TimeUnit.MILLISECONDS.toDays(diff_in_time1));
                         long diff_in_day2 = (TimeUnit.MILLISECONDS.toDays(diff_in_time2));
                         long diff_in_day3 = (TimeUnit.MILLISECONDS.toDays(diff_in_time3));
@@ -221,12 +227,21 @@ public class MainActivity extends AppCompatActivity {
 
                         String[] days = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
                         String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-                        nxtBday.setText(" "+diff_in_day+" Days...");
-                        day1.setText(""+diff_in_day1+" Days, ("+nd1.getDate()+"-"+months[nd1.getMonth()]+"-20"+(nd1.getYear() - 100)+","+days[nd1.getDay()]+")");
-                        day2.setText(""+diff_in_day2+" Days, ("+nd1.getDate()+"-"+months[nd2.getMonth()]+"-20"+(nd2.getYear() - 100)+" ,"+days[nd2.getDay()]+")");
-                        day3.setText(""+diff_in_day3+" Days, ("+nd1.getDate()+"-"+months[nd3.getMonth()]+"-20"+(nd3.getYear() - 100)+" ,"+days[nd3.getDay()]+")");
-                        day4.setText(""+diff_in_day4+" Days, ("+nd1.getDate()+"-"+months[nd4.getMonth()]+"-20"+(nd4.getYear() - 100)+" ,"+days[nd4.getDay()]+")");
-                        day5.setText(""+diff_in_day5+" Days, ("+nd1.getDate()+"-"+months[nd5.getMonth()]+"-20"+(nd5.getYear() - 100)+" ,"+days[nd5.getDay()]+")");
+                        if (diff_in_day0 < 0){
+                            nxtBday.setText(" "+diff_in_day+" Days...");
+                            day1.setText(""+diff_in_day1+" Days, ("+nd1.getDate()+"-"+months[nd1.getMonth()]+"-20"+(nd1.getYear() - 100)+","+days[nd1.getDay()]+")");
+                            day2.setText(""+diff_in_day2+" Days, ("+nd1.getDate()+"-"+months[nd2.getMonth()]+"-20"+(nd2.getYear() - 100)+" ,"+days[nd2.getDay()]+")");
+                            day3.setText(""+diff_in_day3+" Days, ("+nd1.getDate()+"-"+months[nd3.getMonth()]+"-20"+(nd3.getYear() - 100)+" ,"+days[nd3.getDay()]+")");
+                            day4.setText(""+diff_in_day4+" Days, ("+nd1.getDate()+"-"+months[nd4.getMonth()]+"-20"+(nd4.getYear() - 100)+" ,"+days[nd4.getDay()]+")");
+                            day5.setText(""+diff_in_day5+" Days, ("+nd1.getDate()+"-"+months[nd5.getMonth()]+"-20"+(nd5.getYear() - 100)+" ,"+days[nd5.getDay()]+")");
+                        }else{
+                            nxtBday.setText(" "+diff_in_day0+" Days...");
+                            day1.setText(""+diff_in_day0+" Days, ("+nd1.getDate()+"-"+months[nd0.getMonth()]+"-20"+(nd0.getYear() - 100)+" ,"+days[nd0.getDay()]+")");
+                            day2.setText(""+diff_in_day1+" Days, ("+nd1.getDate()+"-"+months[nd1.getMonth()]+"-20"+(nd1.getYear() - 100)+","+days[nd1.getDay()]+")");
+                            day3.setText(""+diff_in_day2+" Days, ("+nd1.getDate()+"-"+months[nd2.getMonth()]+"-20"+(nd2.getYear() - 100)+" ,"+days[nd2.getDay()]+")");
+                            day4.setText(""+diff_in_day3+" Days, ("+nd1.getDate()+"-"+months[nd3.getMonth()]+"-20"+(nd3.getYear() - 100)+" ,"+days[nd3.getDay()]+")");
+                            day5.setText(""+diff_in_day4+" Days, ("+nd1.getDate()+"-"+months[nd4.getMonth()]+"-20"+(nd4.getYear() - 100)+" ,"+days[nd4.getDay()]+")");
+                        }
 
 //                        daySpend.setText(String.valueOf(diff_in_day));
 //                        monthSpend.setText(String.valueOf(diff_in_month));
